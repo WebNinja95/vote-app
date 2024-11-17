@@ -20,20 +20,16 @@ export default function Login() {
     }
 
     try {
+      // Attempt to sign in the user with email and password
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
-      const user = userCredential.user;
-
-      // Fetch user role from Firestore
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      const userData = userDoc.data();
-
-      // Pass role to the homepage
-      navigate("/homepage", { state: { role: userData.role } });
+      // If successful, navigate to the homepage
+      navigate("/homepage");
     } catch (err) {
+      // If an error occurs (invalid email/password), show an error message
       setError("Invalid email or password.");
     }
   };
@@ -72,6 +68,7 @@ export default function Login() {
           </button>
         </form>
       </div>
+      <img src="/images/vote2.jpg" alt="" className="img-log" />
     </div>
   );
 }

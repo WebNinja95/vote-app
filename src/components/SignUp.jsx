@@ -102,6 +102,7 @@ export default function SignUp() {
           </button>
         </form>
       </div>
+      <img src="/images/vote2.jpg" alt="" className="img-log" />
     </div>
   );
 }

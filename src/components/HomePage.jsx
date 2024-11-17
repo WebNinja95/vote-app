@@ -1,47 +1,71 @@
-import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { auth, db } from "../firebase";
+import { signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import Card from "./CardVote.jsx";
 
-export default function HomePage() {
-  const location = useLocation();
-  const { role } = location.state || { role: "user" };
-  const [users, setUsers] = useState([]);
+export default function Home() {
+  const [role, setRole] = useState("");
+  const navigate = useNavigate();
 
+  // Fetch user role from Firestore
   useEffect(() => {
-    if (role === "admin") {
-      const fetchUsers = async () => {
-        try {
-          const querySnapshot = await getDocs(collection(db, "users"));
-          const userList = querySnapshot.docs.map((doc) => doc.data());
-          setUsers(userList);
-        } catch (err) {
-          console.error("Error fetching users:", err);
+    const fetchUserRole = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          setRole(userDoc.data().role);
         }
-      };
-      fetchUsers();
-    }
-  }, [role]);
+      }
+    };
+    fetchUserRole();
+  }, []);
+
+  // Logout function
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/");
+  };
 
   return (
-    <div>
-      <h1>Welcome to the Homepage!</h1>
-
-      {role === "admin" && (
-        <div className="admin-section">
-          <h2>Admin Panel: User List</h2>
-          <ul>
-            {users.map((user) => (
-              <li key={user.uid}>
-                <strong>Name:</strong> {user.name}, <strong>Email:</strong>{" "}
-                {user.email}, <strong>Role:</strong> {user.role}
-              </li>
-            ))}
-          </ul>
+    <div className="home-container">
+      <nav className="navbar">
+        <h2>Vote</h2>
+        <div>
+          {role === "admin" && (
+            <button className="admin-button" onClick={() => navigate("/admin")}>
+              Admin
+            </button>
+          )}
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
-      )}
-
-      <p>This is the main content of the homepage for all users.</p>
+      </nav>
+      <div className="cards-container">
+        <Card
+          imageSrc="/images/barack.png"
+          title="Barack Obama"
+          onVote={() => handleVote(1)}
+        />
+        <Card
+          imageSrc="/images/trump.png"
+          title="Donald Trump"
+          onVote={() => handleVote(2)}
+        />
+        <Card
+          imageSrc="/images/biden.png"
+          title="Joe Biden"
+          onVote={() => handleVote(3)}
+        />
+        <Card
+          imageSrc="/images/putin2.png"
+          title="Vladimir Putin"
+          onVote={() => handleVote(4)}
+        />
+      </div>
     </div>
   );
 }
