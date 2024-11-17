@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -19,8 +20,19 @@ export default function Login() {
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/homepage");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Fetch user role from Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      const userData = userDoc.data();
+
+      // Pass role to the homepage
+      navigate("/homepage", { state: { role: userData.role } });
     } catch (err) {
       setError("Invalid email or password.");
     }
@@ -60,7 +72,6 @@ export default function Login() {
           </button>
         </form>
       </div>
-      <img src="/images/vote2.jpg" alt="" />
     </div>
   );
 }

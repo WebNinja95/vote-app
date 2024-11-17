@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
@@ -16,17 +16,14 @@ export default function SignUp() {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    // Form validation
-    if (!name || !email || !password || !confirmPassword) {
-      setError("All fields are required.");
-      return;
-    }
+    // Basic validation
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
 
     try {
+      // Create user with Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -34,16 +31,19 @@ export default function SignUp() {
       );
       const user = userCredential.user;
 
-      // Store user data in Firestore
+      // Save user data in Firestore with a default role of "user"
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
-        name,
-        email,
+        name: name,
+        email: email,
+        role: "user", // Default role
       });
 
+      // Redirect to login page after successful sign up
       navigate("/");
     } catch (err) {
-      setError(err.message);
+      setError("Failed to create an account. Please try again.");
+      console.error(err);
     }
   };
 
@@ -60,6 +60,7 @@ export default function SignUp() {
               className="input-field"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
           <div className="input-container">
@@ -70,6 +71,7 @@ export default function SignUp() {
               className="input-field"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="input-container">
@@ -80,6 +82,7 @@ export default function SignUp() {
               className="input-field"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           <div className="input-container">
@@ -90,6 +93,7 @@ export default function SignUp() {
               className="input-field"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
           </div>
           {error && <p className="error-message">{error}</p>}
@@ -98,7 +102,6 @@ export default function SignUp() {
           </button>
         </form>
       </div>
-      <img src="/images/vote2.jpg" alt="" />
     </div>
   );
 }
