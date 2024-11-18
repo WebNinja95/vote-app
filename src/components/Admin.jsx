@@ -18,24 +18,33 @@ export default function AdminPage() {
     fetchUsers();
   }, []);
 
-  // Logout function
   const handleLogout = async () => {
+    localStorage.removeItem("userRole");
     await signOut(auth);
     navigate("/");
   };
 
   return (
     <div className="admin-container">
-      <h2>Admin Dashboard</h2>
-      <button onClick={handleLogout}>Logout</button>
-      <h3>User List:</h3>
-      <ul>
+      <header className="admin-header">
+        <h2>Admin Dashboard</h2>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      </header>
+      <h3>User List</h3>
+      <div className="user-list">
         {users.map((user) => (
-          <li key={user.uid}>
-            {user.name} - {user.email} ({user.role})
-          </li>
+          <div className="user-card" key={user.uid}>
+            <h4>{user.name}</h4>
+            <p>Email: {user.email}</p>
+            <p>
+              Role:{" "}
+              <span className={`role-badge ${user.role}`}>{user.role}</span>
+            </p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

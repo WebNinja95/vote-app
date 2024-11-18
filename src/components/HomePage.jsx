@@ -113,7 +113,7 @@ export default function Home() {
   return (
     <div className="home-container">
       <nav className="navbar">
-        <h2>Vote</h2>
+        <img src="/images/Logo.jpg" alt="" className="Logo" />
         <div>
           {role === "admin" && (
             <button className="admin-button" onClick={() => navigate("/admin")}>
