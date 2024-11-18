@@ -16,14 +16,12 @@ export default function SignUp() {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
 
     try {
-      // Create user with Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
