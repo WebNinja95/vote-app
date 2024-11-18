@@ -11,7 +11,7 @@ export default function Home() {
   const [vote, setVote] = useState([0, 0, 0, 0]);
   const [userVote, setUserVote] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [notification, setNotification] = useState(null); // New state for notification
+  const [notification, setNotification] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {

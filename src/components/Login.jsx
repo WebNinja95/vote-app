@@ -20,16 +20,14 @@ export default function Login() {
     }
 
     try {
-      // Attempt to sign in the user with email and password
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
-      // If successful, navigate to the homepage
+
       navigate("/homepage");
     } catch (err) {
-      // If an error occurs (invalid email/password), show an error message
       setError("Invalid email or password.");
     }
   };
@@ -66,9 +64,12 @@ export default function Login() {
           <button type="submit" className="login-button">
             Login
           </button>
+          <img src="/images/Logo.jpg" alt="logo" className="logo-login" />
         </form>
       </div>
-      <img src="/images/vote2.jpg" alt="" className="img-log" />
+      <div className="form-img">
+        <img src="/images/vote-2.png" alt="" className="img-log" />
+      </div>
     </div>
   );
 }

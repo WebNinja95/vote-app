@@ -8,7 +8,6 @@ export default function AdminPage() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch all users from Firestore
   useEffect(() => {
     const fetchUsers = async () => {
       const querySnapshot = await getDocs(collection(db, "users"));

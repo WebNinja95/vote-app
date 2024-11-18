@@ -11,6 +11,11 @@
 form {
   width: 50%;
 }
+.logo-login {
+  width: 40%;
+  margin-left: 90px;
+  margin-top: 40px;
+}
 
 .Form-Login {
   display: flex;
@@ -20,14 +25,24 @@ form {
   height: 60vh;
   width: 40%;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #f6feff;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
-
+.form-img {
+  height: 60vh;
+  background-color: #6ce5bb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
 h2 {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  margin-top: 40px;
   font-size: 2.5rem;
   color: #081213;
 }
@@ -43,7 +58,7 @@ h2 {
 .input-icon {
   position: absolute;
   left: 10px;
-  color: #3a8a8e;
+  color: #5ddeae;
   font-size: 18px;
 }
 
@@ -53,19 +68,19 @@ h2 {
   border: none;
   border-bottom: 2px solid #ccc;
   border-radius: 0;
-  background-color: #ffffff;
+  background-color: #f6feff;
   box-shadow: none;
   transition: border-color 0.2s;
 }
 
 .input-field:focus {
   outline: none;
-  border-bottom: 2px solid #3a8a8e;
+  border-bottom: 2px solid #5ddeae;
 }
 
 .create-account-link {
   display: block;
-  margin: 10px 0;
+  margin-top: 20px;
   text-align: center;
   color: #070d0e;
   text-decoration: none;
@@ -75,16 +90,16 @@ h2 {
 }
 
 .create-account-link:hover {
-  color: #3a8a8e;
+  color: #5ddeae;
 }
 
 .login-button {
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
+  margin-top: 30px;
   border: none;
   border-radius: 5px;
-  background: linear-gradient(to right, #6ab3bb, #3a8a8e);
+  background: linear-gradient(to bottom, #6ce5bb, #45d29b);
   color: #fff;
   font-size: 16px;
   font-weight: bold;
@@ -94,16 +109,13 @@ h2 {
 }
 
 .login-button:hover {
-  background: linear-gradient(to right, #3a8a8e, #6ab3bb);
+  background: linear-gradient(to bottom, #5ad3a1, #3ab07e);
   transform: translateY(-3px);
 }
 
 .img-log {
   height: 60vh;
-  width: 35%;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 /* home page section */
@@ -115,6 +127,7 @@ h2 {
   width: 30%;
   height: 120px;
   max-width: 170px;
+  cursor: pointer;
 }
 nav {
   background-color: #f6feff;

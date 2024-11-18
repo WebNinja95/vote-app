@@ -100,7 +100,9 @@ export default function SignUp() {
           </button>
         </form>
       </div>
-      <img src="/images/vote2.jpg" alt="" className="img-log" />
+      <div className="form-img">
+        <img src="/images/vote-2.png" alt="" className="img-log" />
+      </div>
     </div>
   );
 }
